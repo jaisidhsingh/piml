@@ -16,7 +16,7 @@
 import torch
 from torch.utils.data import Dataset
 import math
-from pde import ScalarField, CartesianGrid, MemoryStorage, PDE
+from pde import ScalarField, CartesianGrid, MemoryStorage, PDE, FieldCollection
 from pde.pdes import WavePDE, DiffusionPDE
 import numpy as np
 import os
@@ -88,7 +88,10 @@ class AbstractDataset(Dataset):
                 self.buffer[f'{traj_id}'] = self.buffer_shelve[f'{traj_id}']
             else:
                 self.buffer[f'{traj_id}'] = self._load_trajectory(traj_id)
+        
+        # print("Y", self.buffer[f'{traj_id}']['raw_data'][0].shape)
         data = self.buffer[f'{traj_id}']['data'][:, seq_id * self.n:(seq_id + 1) * self.n]  # (n_ch, T, H, W)
+        # print("X", data.shape)
         data = torch.tensor(data).float().permute(1, 2, 3, 0)  # (T, H, W, n_ch)
         if self.group == 'train':
             data = data[:self.n_frames_train] / self.scale 
@@ -168,15 +171,18 @@ class HeatEquationDataset(AbstractDataset):
     def _get_init_cond(self, index):
         np.random.seed(index if self.group != 'test' else self.max - index)
         init_cond = np.random.rand(self.size, self.size)
-        u = ScalarField(self.grid, init_cond)
-        return self.eqs.get_initial_condition(u)
+        u = ScalarField.random_uniform(self.grid, init_cond)
+        # v = ScalarField(u.grid)
+        # init_cond = FieldCollection([u, v], labels=["u", "v"])
+        return u #self.eqs.get_initial_condition(u)
 
     def _generate_trajectory(self, traj_id):
         print(f'generating {traj_id}')
         storage = MemoryStorage()
         state = self._get_init_cond(traj_id)
         self.eqs.solve(state, t_range=self.t_horizon * self.n_seq_per_traj, dt=1e-3, tracker=storage.tracker(self.dt_eval))
-        self.buffer_shelve[f'{traj_id}'] = {'data': np.stack(storage.data, axis=1)}
+        buffered_data = [np.expand_dims(item, axis=0) for item in storage.data]
+        self.buffer_shelve[f'{traj_id}'] = {'data': np.stack(buffered_data, axis=1)}
 
 
 #################

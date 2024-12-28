@@ -66,7 +66,7 @@ def process_config(input_dataset, path_results, device="gpu:0", mask_data=0.0, n
         n_layers = 3
         minibatch_size = 32 
         dataset_tr_params = {
-            "n_seq": 512, "n_seq_per_traj": 8, "t_horizon": 5, "dt": 0.25, "size": size, "group": "train",
+            "n_seq": 50, "n_seq_per_traj": 8, "t_horizon": 5, "dt": 0.25, "size": size, "group": "train",
             'n_frames_train': n_frames_train, "param": {"diffusivity": 0.1}}
         dataset_tr_eval_params = dict()
         dataset_tr_eval_params.update(dataset_tr_params)
