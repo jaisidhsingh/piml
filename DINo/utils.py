@@ -56,7 +56,33 @@ def process_config(input_dataset, path_results, device="gpu:0", mask_data=0.0, n
         dataset_ts = WaveDataset(buffer_shelve=buffer_shelve_ts, **dataset_ts_params)
         coord_dim = dataset_tr.coord_dim
     
-    
+    elif input_dataset == "heat":
+        state_dim = 2
+        code_dim = 50
+        size = 64
+        coord_dim = 2
+        hidden_c = 256
+        hidden_c_enc = 64
+        n_layers = 3
+        minibatch_size = 32 
+        dataset_tr_params = {
+            "n_seq": 512, "n_seq_per_traj": 8, "t_horizon": 5, "dt": 0.25, "size": size, "group": "train",
+            'n_frames_train': n_frames_train, "param": {"diffusivity": 0.1}}
+        dataset_tr_eval_params = dict()
+        dataset_tr_eval_params.update(dataset_tr_params)
+        dataset_tr_eval_params["group"] = "train_eval"
+        dataset_ts_params = dict()
+        dataset_ts_params.update(dataset_tr_params)
+        dataset_ts_params["group"] = "test"
+        buffer_file_tr = f"{path_results}/heat_train.shelve"
+        buffer_shelve_tr = buffer_shelve_tr_eval = shelve.open(buffer_file_tr)
+        buffer_file_ts = f"{path_results}/heat_test.shelve"
+        buffer_shelve_ts = shelve.open(buffer_file_ts)
+        dataset_ts_params["n_seq"] = 32
+        dataset_tr = HeatEquationDataset(buffer_shelve=buffer_shelve_tr, **dataset_tr_params)
+        dataset_tr_eval = HeatEquationDataset(buffer_shelve=buffer_shelve_tr_eval, **dataset_tr_eval_params)
+        dataset_ts = HeatEquationDataset(buffer_shelve=buffer_shelve_ts, **dataset_ts_params)
+        coord_dim = dataset_tr.coord_dim
 
     elif input_dataset == "navier_stokes":
         state_dim = 1

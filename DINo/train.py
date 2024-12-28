@@ -87,6 +87,9 @@ eval_every = 100
 n_epochs = 120000
 method = "rk4" if n_cond == 0 else "euler" 
 
+# FLAG
+sys.exit(0)
+
 if input_dataset == "wave" or input_dataset == "shallow_water":
     n_steps = 500
 else:
