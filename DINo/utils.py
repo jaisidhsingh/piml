@@ -57,7 +57,7 @@ def process_config(input_dataset, path_results, device="gpu:0", mask_data=0.0, n
         coord_dim = dataset_tr.coord_dim
     
     elif input_dataset == "heat":
-        state_dim = 2
+        state_dim = 1
         code_dim = 50
         size = 64
         coord_dim = 2

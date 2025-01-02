@@ -1,0 +1,66 @@
+run_id: 20250102_160945
+seed: 1
+dataset: heat
+method: rk4
+code_c: 50
+lr: 0.01
+n_params forecaster: 183286
+coord_dim: 2
+n_frames_train: 10
+subsampling_rate: 100.0%
+Initialize the cache for `make_operator`
+Cache missed. Compute result for method `make_operator` with args `[('laplace',), {'bc': 'auto_periodic_neumann'}]`
+Compile `laplace` with parallel=False
+Compile `set_valid` with parallel=False
+Compile `virtual_point` with parallel=False
+Compile `virtual_point` with parallel=False
+Compile `virtual_point` with parallel=False
+Compile `virtual_point` with parallel=False
+Compile `set_valid_bcs` with parallel=False
+Compile `apply_op_compiled` with parallel=False
+Compile `pde_rhs` with parallel=False
+Initialize the cache for `make_operator_no_bc`
+Cache missed. Compute result for method `make_operator_no_bc` with args `[(OperatorInfo(factory=<function make_laplace at 0x14f06c280>, rank_in=0, rank_out=0, name='laplace'),), {}]`
+Compile `laplace` with parallel=False
+Init explicit Euler stepper with dt=0.001
+No post-step hook defined
+Start simulation at t=0
+Simulation finished at t=40.0.
+Compile `pde_rhs` with parallel=False
+Init explicit Euler stepper with dt=0.001
+No post-step hook defined
+Start simulation at t=0
+Simulation finished at t=40.0.
+Compile `pde_rhs` with parallel=False
+Init explicit Euler stepper with dt=0.001
+No post-step hook defined
+Start simulation at t=0
+Simulation finished at t=40.0.
+Compile `pde_rhs` with parallel=False
+Init explicit Euler stepper with dt=0.001
+No post-step hook defined
+Start simulation at t=0
+Simulation finished at t=40.0.
+Compile `pde_rhs` with parallel=False
+Init explicit Euler stepper with dt=0.001
+No post-step hook defined
+Start simulation at t=0
+Simulation finished at t=40.0.
+Compile `pde_rhs` with parallel=False
+Init explicit Euler stepper with dt=0.001
+No post-step hook defined
+Start simulation at t=0
+Simulation finished at t=40.0.
+N_ones in mask: 4096
+Missingness ratio: 0.0%
+ground_truth: [32, 10, 64, 64, 1]
+t: 0.0
+index: tensor([15, 30, 10,  8, 26, 11,  6, 32,  9, 21, 19, 18, 37, 38, 34,  1, 35, 25,
+        33, 14, 13, 48, 12, 23, 31, 49, 29, 39,  2,  0, 28, 16])
+Dataset heat, Runid 20250102_160945, Epoch [0/0] MSE Auto-dec 5.157e-01, MSE Dyn 6.318e-05, epsilon 9.900e-01
+Compile `pde_rhs` with parallel=False
+Init explicit Euler stepper with dt=0.001
+No post-step hook defined
+Start simulation at t=0
+Simulation finished at t=40.0.
+Dataset heat, Runid 20250102_160945, Epoch [4/0] MSE Auto-dec 3.371e-01, MSE Dyn 4.799e-06, epsilon 9.900e-01

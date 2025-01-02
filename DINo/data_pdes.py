@@ -163,7 +163,7 @@ class WaveDataset(AbstractDataset):
 class HeatEquationDataset(AbstractDataset):
     def __init__(self, param, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.grid = CartesianGrid([[-1., 1.]] * 2, self.size, periodic=False)
+        self.grid = CartesianGrid([[-1., 1.]] * 2, [self.size, self.size], periodic=False)
         self.eqs = DiffusionPDE(**param)
         self.coords = get_mgrid(self.size, vmin=-1, vmax=1, dim=2)
         self.coord_dim = self.coords.shape[-1]
