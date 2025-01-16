@@ -167,14 +167,13 @@ class HeatEquationDataset(AbstractDataset):
         self.eqs = DiffusionPDE(**param)
         self.coords = get_mgrid(self.size, vmin=-1, vmax=1, dim=2)
         self.coord_dim = self.coords.shape[-1]
+        self.grf_sampler = GaussianRF(dim=2, size=self.size, alpha=2.5, tau=7)
 
     def _get_init_cond(self, index):
         np.random.seed(index if self.group != 'test' else self.max - index)
-        init_cond = np.random.rand(self.size, self.size)
-        u = ScalarField.random_uniform(self.grid, init_cond)
-        # v = ScalarField(u.grid)
-        # init_cond = FieldCollection([u, v], labels=["u", "v"])
-        return u #self.eqs.get_initial_condition(u)
+        init_cond = self.grf_sampler.sample().numpy()
+        u = ScalarField(self.grid, init_cond)
+        return u
 
     def _generate_trajectory(self, traj_id):
         print(f'generating {traj_id}')
