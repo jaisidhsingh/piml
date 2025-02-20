@@ -64,7 +64,7 @@ def process_config(input_dataset, path_results, device="gpu:0", mask_data=0.0, n
         hidden_c = 512
         hidden_c_enc = 64
         n_layers = 3
-        minibatch_size = 32 
+        minibatch_size = 16
         dataset_tr_params = {
             "n_seq": 512, "n_seq_per_traj": 2, "t_horizon": 5, "dt": 0.25, "size": size, "group": "train",
             'n_frames_train': n_frames_train, "param": {"diffusivity": 0.1}}
